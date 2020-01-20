@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/User';
 
 @Component({
@@ -10,14 +10,18 @@ export class UsersComponent implements OnInit {
   user: User = {
     firstName: '',
     lastName: '',
-  email: ''
+    age: null,
+    address: {
+      street: '',
+      city: '',
+      state: ''
+    }
   };
   users: User[];
   showExtended = true;
   loaded = false;
   enableAdd = false;
   showUserForm = false;
-  @ViewChild('userForm', {static: false}) form: any;
 
   constructor() { }
 
@@ -26,7 +30,12 @@ export class UsersComponent implements OnInit {
         {
           firstName: 'Agbon',
           lastName: 'Lahor',
-          email: 'Agbon@gmail.com',
+          age: 30,
+          address: {
+            street: '20 Main st',
+            city: 'Boston',
+            state: 'MA'
+          },
           isActive: true,
           registered: new Date('02/01/2018 08:30:00'),
           hide: true
@@ -34,7 +43,12 @@ export class UsersComponent implements OnInit {
         {
           firstName: 'Laszlo',
           lastName: 'Nagy',
-          email: 'Laszlo@gmail.com',
+          age: 30,
+          address: {
+            street: '50 Main st',
+            city: 'Boston',
+            state: 'MA'
+          },
           isActive: false,
           registered: new Date('03/11/2018 06:20:00'),
           hide: true
@@ -42,7 +56,11 @@ export class UsersComponent implements OnInit {
         {
           firstName: 'Ze',
           lastName: 'Roberto',
-          email: 'ZeRoberto@gmail.com',
+          age: 30,
+          address: {
+            street: '60 Main st',
+            city: 'Boston'
+          },
           isActive: true,
           registered: new Date('11/02/2016 10:30:00'),
           hide: true
@@ -50,17 +68,27 @@ export class UsersComponent implements OnInit {
       ];
       this.loaded = true;
   }
-
-  onSubmit({value, valid}: {value: User, valid: boolean}) {
-   if (!valid) {
-console.log('Form is not valid');
-   } else {
-     value.isActive = true;
-     value.registered = new Date();
-     value.hide = true;
-     this.users.unshift(value);
-     this.form.reset();
-     this.showUserForm = false;
-   }
+  addUser() {
+    this.user.isActive = true;
+    this.user.registered = new Date();
+    this.users.unshift(this.user);
+    this.user = {
+      firstName: '',
+    lastName: '',
+    age: null,
+      address: {
+        street: '',
+        city: '',
+        state: ''
+      }
+    };
+  }
+  onSubmit(e) {
+    console.log(234);
+    e.preventDefault();
+  }
+  fireEvent(e) {
+    console.log(e.target.value);
+    console.log(e.type);
   }
 }
